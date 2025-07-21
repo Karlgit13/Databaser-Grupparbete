@@ -1,3 +1,5 @@
+Se ER-diagrammet på dbdiagram.io: https://dbdiagram.io/d/687e11fef413ba3508dc530a (alternativt i ER-diagram mappen)
+
 ----- Instruktioner -----
 jsd24-Databaser-25yhp-Grupp-Examination-SQL-bulletin
 Grupp examination: SQL med PostgreSQL - SQL bulletin
