@@ -1,0 +1,31 @@
+Table users {
+  id integer [primary key]
+  username UNIQUE
+  created_at timestamp
+}
+
+Table channels {
+  id integer [primary key]
+  name varchar
+  owner_id integer [not null, ref: > users.id]
+}
+
+Table messages {
+  id integer [primary key]
+  content text
+  user_id integer [not null, ref: > users.id]
+  created_at timestamp
+}
+
+Table message_channels {
+  message_id integer [ref: > messages.id]
+  channel_id integer [ref: > channels.id]
+  Note: "Composite PK = message_id + channel_id"
+  Primary Key (message_id, channel_id)
+}
+
+Table subscriptions {
+  user_id integer [ref: > users.id]
+  channel_id integer [ref: > channels.id]
+  PRIMARY KEY (user_id, channel_id)
+}
