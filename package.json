@@ -1,0 +1,22 @@
+{
+  "name": "databaser-grupparbete",
+  "version": "1.0.0",
+  "description": "----- Instruktioner -----\r jsd24-Databaser-25yhp-Grupp-Examination-SQL-bulletin\r Grupp examination: SQL med PostgreSQL - SQL bulletin\r Instruktioner\r Ni ska i denna examination bygga ett API och en databas för en tjänst som fungerar som en enkel anslagstavla. En användare kan posta ett meddelande till en kanal som denna \"prenumererar\" på samt se andra meddelanden som finns i den kanalen. Tänk typ väldigt enkla Facebook grupper.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
