@@ -1,6 +1,17 @@
-import { Pool } from "pg";
+import express from "express";
+import { pool } from "../db.js";
 
-app.get("users", async (req, res) => {
-    const response = await pool.query("SELECT * FROM users");
-    res.json(results.rows);
+const router = express.Router()
+
+router.get("/", async (req, res) => {
+    try {
+        const response = await pool.query("SELECT * FROM channels");
+        res.json(response.rows);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+
 })
+
+export default router;
