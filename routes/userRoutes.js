@@ -31,4 +31,24 @@ router.post("/", async (req, res) => {
 });
 
 
+// Get all channels the user is subscribed to
+// Params: :id = user ID
+// Returns: array of channels the user has subscribed to
+router.get("/:id/channels", async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const result = await pool.query(`
+      SELECT channels.*
+      FROM channels
+      JOIN subscriptions ON channels.id = subscriptions.channel_id
+      WHERE subscriptions.user_id = $1
+    `, [userId]);
+        res.json(result.rows);
+    } catch (error) {
+        console.error("Error fetching user's channels:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
 export default router;
