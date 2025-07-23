@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     }
 })
 
+
 // Create a new subscription
 router.post("/", async (req, res) => {
     const { _userId, _channelId } = req.body;
@@ -27,6 +28,24 @@ router.post("/", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 })
+
+
+// Delete a subscription (unsubscribe user from channel)
+// Params: :userId and :channelId
+// Deletes the subscription entry from the database
+router.delete("/:userId/:channelId", async (req, res) => {
+    const { userId, channelId } = req.params;
+    try {
+        await pool.query(
+            "DELETE FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
+            [userId, channelId]
+        );
+        res.json({ message: "Subscription removed successfully" });
+    } catch (error) {
+        console.error("Error deleting subscription:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 
 export default router;

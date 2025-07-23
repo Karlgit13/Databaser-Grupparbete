@@ -14,6 +14,9 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+
+
 // Skapa nytt meddelande (endast om användaren är prenumerant på kanalen)
 router.post("/", async (req, res) => {
   const { user_id, channel_id, content } = req.body;
@@ -42,5 +45,46 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+
+// Get all messages in a specific channel
+// Params: :id = channel ID
+// Returns: array of messages in the channel
+router.get("/channel/:id", async (req, res) => {
+  const channelId = req.params.id
+  try {
+    const result = await pool.query(
+      "SELECT * FROM messages WHERE channel_id = $1 ORDER BY created_at DESC",
+      [channelId]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching messages for channel:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
+
+// Edit a specific message
+// Params: :id = message ID
+// Body: { content: "New message content" }
+// Returns: the updated message
+router.patch("/:id", async (req, res) => {
+  const messageId = req.params.id;
+  const { content } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE messages SET content = $1 WHERE id = $2 RETURNING *`,
+      [content, messageId]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating message:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 
 export default router;
