@@ -1,5 +1,6 @@
 import express from "express";
 import { pool } from "../db.js";
+import { getAllUsers } from "../models/userModels.js";
 
 const router = express.Router();
 
