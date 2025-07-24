@@ -85,6 +85,29 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+// DELETE a message by ID
+// Params: :id = message ID
+router.delete("/:id", async (req, res) => {
+  const messageId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM messages WHERE id = $1 RETURNING *",
+      [messageId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Meddelandet kunde inte hittas" });
+    }
+
+    res.status(200).json({ message: "Meddelandet har raderats" });
+  } catch (error) {
+    console.error("Fel vid radering av meddelande:", error);
+    res.status(500).json({ error: "Serverfel vid radering" });
+  }
+});
+
+
 
 
 export default router;
