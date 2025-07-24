@@ -1,6 +1,6 @@
 CREATE TABLE "users" (
   "id" integer PRIMARY KEY,
-  "username" "UNIQUE",
+  "username" varchar(255),
   "created_at" timestamp,
   "content" text NOT NULL
 );
@@ -21,13 +21,13 @@ CREATE TABLE "messages" (
 CREATE TABLE "message_channels" (
   "message_id" integer,
   "channel_id" integer,
-  "Primary" "Key(message_id,channel_id)"
+  PRIMARY KEY ("message_id", "channel_id")
 );
 
 CREATE TABLE "subscriptions" (
   "user_id" integer,
   "channel_id" integer,
-  "PRIMARY" "KEY(user_id,channel_id)"
+  PRIMARY KEY ("user_id", "channel_id")
 );
 
 COMMENT ON TABLE "message_channels" IS 'Composite PK = message_id + channel_id';
