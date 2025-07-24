@@ -2,11 +2,12 @@ Table users {
   id integer [primary key]
   username UNIQUE
   created_at timestamp
+  content text [not null]
 }
 
 Table channels {
   id integer [primary key]
-  name varchar
+  name varchar(255)
   owner_id integer [not null, ref: > users.id]
 }
 
