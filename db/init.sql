@@ -6,13 +6,13 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "channels" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(255),
   "owner_id" integer NOT NULL
 );
 
 CREATE TABLE "messages" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "content" text,
   "user_id" integer NOT NULL,
   "created_at" timestamp

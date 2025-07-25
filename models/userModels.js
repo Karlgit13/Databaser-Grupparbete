@@ -13,12 +13,12 @@ export async function createUser(username, content) {
         const result = await pool.query(query, values);
         return result.rows[0];
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error creating user:", error.message, error.stack);
         throw new Error("Internal Server Error");
     }
 }
 
-const hej = "hej";
+
 // Hämta alla användare
 export async function getAllUsers() {
     try {

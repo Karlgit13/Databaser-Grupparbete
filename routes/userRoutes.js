@@ -4,14 +4,13 @@ import { pool } from "../db.js";
 
 const router = express.Router();
 
-// GET all users
-router.post("/", async (req, res) => {
-    const { username, content } = req.body;
+// GET /users – Hämta alla användare
+router.get("/", async (req, res) => {
     try {
-        const newUser = await createUser(username, content);
-        res.status(201).json(newUser);
+        const users = await getAllUsers();
+        res.json(users);
     } catch (error) {
-        console.error("Error creating user:", error);
+        console.error("Error fetching users:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
