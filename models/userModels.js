@@ -1,29 +1,28 @@
 // usermodels.js
-
 import { pool } from "../db.js";
 
-
-//skapa användare
-export async function createUser(name, email) {
+// Skapa användare
+export async function createUser(username, content) {
     try {
         const query = `
-        INSERT INTO users (name, email)
-        VALUES ($1, $2)
+        INSERT INTO users (username, created_at, content)
+        VALUES ($1, NOW(), $2)
         RETURNING *;
         `;
-        const values = [name, email]
-        const result = await pool.query(query, values)
+        const values = [username, content];
+        const result = await pool.query(query, values);
         return result.rows[0];
     } catch (error) {
-        console.error("Error creating user:", error)
+        console.error("Error creating user:", error);
         throw new Error("Internal Server Error");
     }
 }
 
-//hämta alla användare
+const hej = "hej";
+// Hämta alla användare
 export async function getAllUsers() {
     try {
-        const result = await pool.query("SELECT * FROM users")
+        const result = await pool.query("SELECT * FROM users");
         return result.rows;
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -31,13 +30,14 @@ export async function getAllUsers() {
     }
 }
 
-// hämta användare med id
+// Hämta användare via ID
 export async function getUserById(id) {
     try {
         const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-        if (result.rows.length === 0 && null) {
+        if (result.rows.length === 0) {
             throw new Error("User not found");
         }
+        return result.rows[0];
     } catch (error) {
         console.error("Error fetching user by ID:", error);
         throw new Error("Internal Server Error");

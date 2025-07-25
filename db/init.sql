@@ -1,5 +1,5 @@
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "username" varchar(255),
   "created_at" timestamp,
   "content" text NOT NULL

@@ -1,34 +1,37 @@
 import express from "express";
+import { getAllUsers, createUser } from "../models/userModels.js";
 import { pool } from "../db.js";
-import { getAllUsers } from "../models/userModels.js";
 
 const router = express.Router();
 
-
-// Get all users
-router.get("/", async (req, res) => {
-    try {
-        const users = await getAllUsers();
-        res.json(users)
-    } catch (error) {
-        console.error("error fetching users:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-
-
-// Create a new user
+// GET all users
 router.post("/", async (req, res) => {
-    const { name, email } = req.body
+    const { username, content } = req.body;
     try {
-        const newUser = await createUser(name, email)
+        const newUser = await createUser(username, content);
         res.status(201).json(newUser);
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// POST create new user
+// export async function createUser(username, content) {
+//     try {
+//         const query = `
+//         INSERT INTO users (username, created_at, content)
+//         VALUES ($1, NOW(), $2)
+//         RETURNING *;
+//         `;
+//         const values = [username, content];
+//         const result = await pool.query(query, values);
+//         return result.rows[0];
+//     } catch (error) {
+//         console.error("Error creating user:", error);
+//         throw new Error("Internal Server Error");
+//     }
+// }
 
 
 // Get all channels the user is subscribed to
