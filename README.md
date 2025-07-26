@@ -7,15 +7,12 @@ POST /channels
 POST /subscriptions
 POST /messages
 GET – hämta resurser
-
 GET /channels/:id/messages
 GET /users/:id/channels
 DELETE – ta bort resurser
-
 DELETE /channels/:id
 DELETE /subscriptions/:userId/:channelId
 PUT eller PATCH – uppdatera resurser
-
 PATCH /messages/:id för att redigera ett meddelande
 PATCH /channels/:id för att ändra kanalnamn
 
