@@ -36,8 +36,6 @@ router.post("/", async (req, res) => {
 
 
 // Delete a channel by its ID
-// Params: :id = channel ID
-// Deletes the channel from the database
 router.delete("/:id", async (req, res) => {
     const channelId = req.params.id;
     try {
@@ -51,10 +49,7 @@ router.delete("/:id", async (req, res) => {
 
 
 
-// Update the name of a channel
-// Params: :id = channel ID
-// Body: { name: "New Channel Name" }
-// Returns: the updated channel
+// update a channel's name
 router.patch("/:id", async (req, res) => {
     const channelId = req.params.id;
     const { name } = req.body;
@@ -64,6 +59,11 @@ router.patch("/:id", async (req, res) => {
             "UPDATE channels SET name = $1 WHERE id = $2 RETURNING *",
             [name, channelId]
         );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Kanal kunde inte hittas" });
+        }
+
         res.json(result.rows[0]);
     } catch (error) {
         console.error("Error updating channel:", error);

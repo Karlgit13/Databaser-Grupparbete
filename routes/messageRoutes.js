@@ -62,6 +62,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+// get a specific channel's messages
+router.get("/channel/:id", async (req, res) => {
+  const channelId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      `
+      SELECT m.id AS message_id, m.content, m.created_at, m.user_id, u.username
+      FROM messages m
+      JOIN message_channels mc ON mc.message_id = m.id
+      JOIN users u ON u.id = m.user_id
+      WHERE mc.channel_id = $1
+      ORDER BY m.created_at DESC
+      `,
+      [channelId]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching messages for channel:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 
@@ -83,25 +106,7 @@ router.get("/channel/:id", async (req, res) => {
   }
 })
 
-// Edit a specific message
-// Params: :id = message ID
-// Body: { content: "New message content" }
-// Returns: the updated message
-router.patch("/:id", async (req, res) => {
-  const messageId = req.params.id;
-  const { content } = req.body;
 
-  try {
-    const result = await pool.query(
-      `UPDATE messages SET content = $1 WHERE id = $2 RETURNING *`,
-      [content, messageId]
-    );
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error("Error updating message:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
 
 // DELETE a message by ID
 // Params: :id = message ID
@@ -124,6 +129,29 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Serverfel vid radering" });
   }
 });
+
+// update a message by ID
+router.patch("/:id", async (req, res) => {
+  const messageId = req.params.id;
+  const { content } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE messages SET content = $1 WHERE id = $2 RETURNING *`,
+      [content, messageId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Meddelandet kunde inte hittas" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating message:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 
 

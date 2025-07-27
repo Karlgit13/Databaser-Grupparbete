@@ -44,5 +44,31 @@ router.get("/overview", async (req, res) => {
     }
 });
 
+// delete a channel and all its resources
+router.delete("/:id/full", async (req, res) => {
+    const channelId = req.params.id;
+
+    try {
+        // Ta bort message_channels-kopplingar
+        await pool.query("DELETE FROM message_channels WHERE channel_id = $1", [channelId]);
+
+        // Ta bort subscriptions
+        await pool.query("DELETE FROM subscriptions WHERE channel_id = $1", [channelId]);
+
+        // Till sist: ta bort själva kanalen
+        const result = await pool.query("DELETE FROM channels WHERE id = $1 RETURNING *", [channelId]);
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Kanalen kunde inte hittas" });
+        }
+
+        res.json({ message: "Kanal + tillhörande resurser har raderats." });
+    } catch (error) {
+        console.error("Error deleting channel fully:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
 
 export default router;
