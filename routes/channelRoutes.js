@@ -17,6 +17,8 @@ router.get("/", async (req, res) => {
 })
 
 
+
+
 // Create a new channel
 router.post("/", async (req, res) => {
     const { name, owner_id } = req.body;

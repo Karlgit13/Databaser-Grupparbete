@@ -32,19 +32,37 @@ router.post("/", async (req, res) => {
       return res.status(403).json({ error: "User is not subscribed to the channel" });
     }
 
-    // Lägg till meddelande
-    const result = await pool.query(
-      `INSERT INTO messages (user_id, channel_id, content, created_at)
-       VALUES ($1, $2, $3, NOW()) RETURNING *`,
-      [user_id, channel_id, content]
+    // Skapa meddelandet
+    const messageResult = await pool.query(
+      `INSERT INTO messages (user_id, content, created_at)
+       VALUES ($1, $2, NOW())
+       RETURNING id, user_id, content, created_at`,
+      [user_id, content]
     );
 
-    res.status(201).json(result.rows[0]);
+    const message = messageResult.rows[0];
+
+    // Lägg till koppling till kanal
+    await pool.query(
+      `INSERT INTO message_channels (message_id, channel_id)
+       VALUES ($1, $2)`,
+      [message.id, channel_id]
+    );
+
+    // Lägg till channel_id till svaret
+    const response = {
+      ...message,
+      channel_id: channel_id
+    };
+
+    res.status(201).json(response);
   } catch (error) {
     console.error("Error creating message:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 
 

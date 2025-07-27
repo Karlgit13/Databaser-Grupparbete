@@ -19,9 +19,9 @@ router.get("/", async (req, res) => {
 
 // Create a new subscription
 router.post("/", async (req, res) => {
-    const { _userId, _channelId } = req.body;
+    const { user_id, channel_id } = req.body;
     try {
-        const result = await pool.query("INSERT INTO subscriptions (_userId, _channelId) VALUES ($1, $2) RETURNING *", [_userId, _channelId]);
+        const result = await pool.query("INSERT INTO subscriptions (user_id, channel_id) VALUES ($1, $2) RETURNING *", [user_id, channel_id]);
         res.status(201).json(result.rows[0]);
     } catch (error) {
         console.error("Error creating subscription:", error);
