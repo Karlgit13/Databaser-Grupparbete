@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "GET /messages – Hämta alla meddelanden",
+    "_postman_id": "GET_allMessages-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /messages – Hämta alla meddelanden",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/messages",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "messages"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

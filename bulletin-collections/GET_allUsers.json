@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "GET /users – Hämta alla användare",
+    "_postman_id": "GET_allUsers-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /users – Hämta alla användare",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/users",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

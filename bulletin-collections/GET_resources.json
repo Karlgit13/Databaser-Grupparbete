@@ -1,0 +1,30 @@
+{
+  "info": {
+    "name": "GET /resources/overview",
+    "_postman_id": "GET_resources-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /resources/overview",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/resources/overview",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "resources",
+            "overview"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "info": {
+    "name": "POST /subscriptions",
+    "_postman_id": "POST_subscriptions-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "POST /subscriptions",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 1,\n  \"channel_id\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/subscriptions",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "subscriptions"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

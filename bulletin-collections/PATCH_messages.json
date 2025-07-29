@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "PATCH /messages/:id",
+    "_postman_id": "PATCH_messages-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PATCH /messages/:id",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"Uppdaterat meddelande\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/messages/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "messages",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

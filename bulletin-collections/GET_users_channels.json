@@ -1,0 +1,31 @@
+{
+  "info": {
+    "name": "GET /users/:id/channels",
+    "_postman_id": "GET_users_channels-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /users/:id/channels",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/users/1/channels",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "users",
+            "1",
+            "channels"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

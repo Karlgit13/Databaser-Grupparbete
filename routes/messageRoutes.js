@@ -130,10 +130,14 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// update a message by ID
+// PATCH /messages/:id – uppdatera ett meddelande
 router.patch("/:id", async (req, res) => {
-  const messageId = req.params.id;
+  const messageId = parseInt(req.params.id, 10);
   const { content } = req.body;
+
+  if (isNaN(messageId)) {
+    return res.status(400).json({ error: "Ogiltigt ID" });
+  }
 
   try {
     const result = await pool.query(

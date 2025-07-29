@@ -51,8 +51,12 @@ router.delete("/:id", async (req, res) => {
 
 // update a channel's name
 router.patch("/:id", async (req, res) => {
-    const channelId = req.params.id;
+    const channelId = parseInt(req.params.id, 10);
     const { name } = req.body;
+
+    if (isNaN(channelId)) {
+        return res.status(400).json({ error: "Ogiltigt ID" });
+    }
 
     try {
         const result = await pool.query(
@@ -70,6 +74,7 @@ router.patch("/:id", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
 
 
 

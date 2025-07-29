@@ -1,0 +1,31 @@
+{
+  "info": {
+    "name": "GET /channels/:id/messages",
+    "_postman_id": "GET_channels_messages-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET /channels/:id/messages",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/channels/1/messages",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "channels",
+            "1",
+            "messages"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

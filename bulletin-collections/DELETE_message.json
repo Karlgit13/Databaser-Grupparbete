@@ -1,0 +1,30 @@
+{
+  "info": {
+    "name": "DELETE /messages/:id",
+    "_postman_id": "DELETE_message_by_id-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "DELETE /messages/:id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {},
+        "url": {
+          "raw": "http://localhost:5000/messages/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "messages",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

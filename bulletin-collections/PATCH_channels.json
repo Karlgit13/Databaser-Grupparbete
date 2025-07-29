@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "PATCH /channels/:id",
+    "_postman_id": "PATCH_channels-id",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PATCH /channels/:id",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Uppdaterat kanalnamn\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/channels/1",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "protocol": "http",
+          "path": [
+            "channels",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
