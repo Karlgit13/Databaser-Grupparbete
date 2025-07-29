@@ -1,15 +1,24 @@
+<b>Grupp-Examination-SQL-bulletin<b>
+Målet med detta projekt är att bygga ett API och en databas och i detta fall är det prostgreSQL som är databasen.<br>
+Vi har även inkluderat pgAdmin för att kunna kontrollera att alla endpoints är korrekta och att det lagras i databasen.<br>
+Och som API använder vi då oss av Node.js/Express API.<br>
+Funktionaliteten i detta projekt ska vara en sammankoppling mellan API och databas för en anslagstavla<br>
+En användare ska t.e.x kunna registrera sig och även prenumerera på kanaler samt skicka meddelanden till kanalen.<br>
+En kanal kan endast ha en ägare.<br>
+Användare får endast posta på kanaler dom är prenumeranter på<br>
+En 
+
 Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
-<br>
 https://dbdiagram.io/d/687e11fef413ba3508dc530a
 <br>
 (alternativt i ER-diagram mappen)
 
 ----- Instruktioner -----
 
-POST /users <br>
-POST /channels <br>
-POST /subscriptions <br>
-POST /messages <br>
+POST /users - skapar användare <br>
+POST /channels - skapar kanal <br>
+POST /subscriptions - prenumererar på en kanal <br>
+POST /messages - skickar ett medd till en kanal <br>
 GET – hämta resurser <br>
 GET /channels/:id/messages <br>
 GET /users/:id/channels <br>
