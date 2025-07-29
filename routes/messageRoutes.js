@@ -22,40 +22,33 @@ router.post("/", async (req, res) => {
   const { user_id, channel_id, content } = req.body;
 
   try {
-    // Kontrollera att användaren är prenumerant
+    // Kontrollera att användaren prenumererar på kanalen
     const subCheck = await pool.query(
       `SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2`,
       [user_id, channel_id]
     );
 
-    if (subCheck.rowCount === 0) {
-      return res.status(403).json({ error: "User is not subscribed to the channel" });
+    if (subCheck.rows.length === 0) {
+      return res.status(403).json({ error: "Användaren prenumererar inte på denna kanal" });
     }
 
     // Skapa meddelandet
-    const messageResult = await pool.query(
+    const result = await pool.query(
       `INSERT INTO messages (user_id, content, created_at)
        VALUES ($1, $2, NOW())
-       RETURNING id, user_id, content, created_at`,
+       RETURNING *`,
       [user_id, content]
     );
 
-    const message = messageResult.rows[0];
+    const messageId = result.rows[0].id;
 
-    // Lägg till koppling till kanal
+    // Koppla meddelandet till kanalen
     await pool.query(
-      `INSERT INTO message_channels (message_id, channel_id)
-       VALUES ($1, $2)`,
-      [message.id, channel_id]
+      `INSERT INTO message_channels (message_id, channel_id) VALUES ($1, $2)`,
+      [messageId, channel_id]
     );
 
-    // Lägg till channel_id till svaret
-    const response = {
-      ...message,
-      channel_id: channel_id
-    };
-
-    res.status(201).json(response);
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error creating message:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -89,41 +82,44 @@ router.get("/channel/:id", async (req, res) => {
 
 
 
-// Get all messages in a specific channel
-// Params: :id = channel ID
-// Returns: array of messages in the channel
-router.get("/channel/:id", async (req, res) => {
-  const channelId = req.params.id
+// GET /channels/:id/messages – hämta alla meddelanden i en viss kanal
+router.get("/channels/:id/messages", async (req, res) => {
+  const channelId = parseInt(req.params.id);
   try {
-    const result = await pool.query(
-      "SELECT * FROM messages WHERE channel_id = $1 ORDER BY created_at DESC",
-      [channelId]
-    );
+    const result = await pool.query(`
+            SELECT m.*
+            FROM messages m
+            JOIN message_channels mc ON m.id = mc.message_id
+            WHERE mc.channel_id = $1
+            ORDER BY m.created_at DESC
+        `, [channelId]);
+
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching messages for channel:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-})
+});
 
 
 
-// DELETE a message by ID
-// Params: :id = message ID
+
+// DELETE /messages/:id – Ta bort ett meddelande och dess kopplingar
 router.delete("/:id", async (req, res) => {
-  const messageId = req.params.id;
+  const messageId = parseInt(req.params.id);
 
   try {
-    const result = await pool.query(
-      "DELETE FROM messages WHERE id = $1 RETURNING *",
-      [messageId]
-    );
+    // 1. Ta bort alla kopplingar till kanaler först
+    await pool.query("DELETE FROM message_channels WHERE message_id = $1", [messageId]);
+
+    // 2. Sen kan vi ta bort själva meddelandet
+    const result = await pool.query("DELETE FROM messages WHERE id = $1 RETURNING *", [messageId]);
 
     if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Meddelandet kunde inte hittas" });
+      return res.status(404).json({ error: "Meddelande hittades inte" });
     }
 
-    res.status(200).json({ message: "Meddelandet har raderats" });
+    res.json({ message: "Meddelande borttaget", deleted: result.rows[0] });
   } catch (error) {
     console.error("Fel vid radering av meddelande:", error);
     res.status(500).json({ error: "Serverfel vid radering" });

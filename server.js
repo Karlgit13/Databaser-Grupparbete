@@ -14,6 +14,7 @@ app.use(express.json())
 //routes
 app.use("/users", userRoutes)
 app.use("/channels", channelRoutes)
+app.use("/", messageRoutes)
 app.use("/messages", messageRoutes)
 app.use("/subscriptions", subscriptionRoutes)
 app.use("/resources", resources)
