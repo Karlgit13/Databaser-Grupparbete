@@ -46,6 +46,7 @@ router.get("/:id/channels", async (req, res) => {
       WHERE subscriptions.user_id = $1
     `, [userId]);
         res.json(result.rows);
+        console.log(result.rows);
     } catch (error) {
         console.error("Error fetching user's channels:", error);
         res.status(500).json({ error: "Internal Server Error" });
