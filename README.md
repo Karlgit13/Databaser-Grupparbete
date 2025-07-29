@@ -1,6 +1,6 @@
-<bold>Grupp-Examination-SQL-bulletin<bold>
+# Grupp-Examination-SQL-bulletin<br>
 Målet med detta projekt är att bygga ett API och en databas och i detta fall är det prostgreSQL som är databasen.<br>
-Vi har även inkluderat pgAdmin för att kunna kontrollera att alla endpoints är korrekta och att det lagras i databasen.<br>
+Vi har även inkluderat pgAdmin för att kunna kontrollera att alla endpoints är korrekta och att det lagras i databasen<br>
 Och som API använder vi då oss av Node.js/Express API.<br>
 Funktionaliteten i detta projekt ska vara en sammankoppling mellan API och databas för en anslagstavla<br>
 En användare ska t.e.x kunna registrera sig och även prenumerera på kanaler samt skicka meddelanden till kanalen.<br>
@@ -14,20 +14,14 @@ En kanal:<br>
 har exakt en ägare<br>
 kan innehålla noll eller flera meddelanden<br>
 
-<bold>Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
-https://dbdiagram.io/d/687e11fef413ba3508dc530a<bold>
+## Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
+https://dbdiagram.io/d/687e11fef413ba3508dc530a
 <br>
-(alternativt i ER-diagram mappen)
-
-<bold>---- Instruktioner ----<bold>
-git clone / download zip<br>
-npm install<br>
-nodemon || npm run dev || nodemon server.js<br>
-ny terminal - "/c/Program Files/PostgreSQL/17/bin/pg_ctl.exe" start -D "/c/Program Files/PostgreSQL/17/data"<br>
-(OBS krävs progreSQL17 installerat på datorn)<br>
+(alternativt i ER-diagram mappen)<br>
 
 
-<bold>---- rutter ----<bold>
+## Förklaringar av rutter.
+---- rutter ----<br>
 POST /users - Skapar en ny användare<br>
 POST /channels - Skapar en ny kanal som en användare äger<br>
 POST /subscriptions - Prenumererar en användare på en viss kanal<br>
@@ -44,3 +38,12 @@ DELETE /messages/:id - Tar bort ett enskilt meddelande<br>
 PUT eller PATCH – uppdatera resurser <br>
 PATCH /messages/:id - Uppdaterar innehållet i ett meddelande<br>
 PATCH /channels/:id - Uppdaterar kanalens namn<br>
+
+
+
+## Instruktioner för att starta
+git clone / download zip<br>
+npm install<br>
+nodemon || npm run dev || nodemon server.js<br>
+ny terminal - "/c/Program Files/PostgreSQL/17/bin/pg_ctl.exe" start -D "/c/Program Files/PostgreSQL/17/data"<br>
+(OBS krävs progreSQL17 installerat på datorn)<br>
