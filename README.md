@@ -16,14 +16,14 @@ PUT eller PATCH – uppdatera resurser <br>
 PATCH /messages/:id för att redigera ett meddelande <br>
 PATCH /channels/:id för att ändra kanalnamn <br>
 
-4. 🧪 Testa med Postman
-   Testa alla endpoints med Postman
-   Kontrollera att rätt saker sparas i databasen
-   Spara era anrop (som Postman-samling eller skärmdumpar)
-   Bifoga som dokumentation i inlämningen
-   Betygskriterier
-   För Godkänt:
+🧪 Testa med Postman <br>
+Testa alla endpoints med Postman <br>
+Kontrollera att rätt saker sparas i databasen <br>
+Spara era anrop (som Postman-samling eller skärmdumpar) <br>
+Bifoga som dokumentation i inlämningen <br>
 
+Betygskriterier <br>
+För Godkänt: <br>
 Har ett komplett ER-diagram med alla entiteter och relationer som täcker in kraven ovan. <br>
 API:t fungerar enligt beskrivningen ovan<br>
 Bifoga exempelanrop (använd till exempel: Postman) till alla endpoints (se länk under inlämning)<br>
