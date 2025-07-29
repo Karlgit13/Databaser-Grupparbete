@@ -1,4 +1,4 @@
-<b>Grupp-Examination-SQL-bulletin<b>
+<bold>Grupp-Examination-SQL-bulletin<bold>
 Målet med detta projekt är att bygga ett API och en databas och i detta fall är det prostgreSQL som är databasen.<br>
 Vi har även inkluderat pgAdmin för att kunna kontrollera att alla endpoints är korrekta och att det lagras i databasen.<br>
 Och som API använder vi då oss av Node.js/Express API.<br>
@@ -6,45 +6,41 @@ Funktionaliteten i detta projekt ska vara en sammankoppling mellan API och datab
 En användare ska t.e.x kunna registrera sig och även prenumerera på kanaler samt skicka meddelanden till kanalen.<br>
 En kanal kan endast ha en ägare.<br>
 Användare får endast posta på kanaler dom är prenumeranter på<br>
-En 
+En användare kan endast se meddelanden i de kanaler de är med i<br>
+Ett meddelande:<br>
+tillhör enbart en kanal
+skrivs av exakt en användare<br>
+En kanal:<br>
+har exakt en ägare<br>
+kan innehålla noll eller flera meddelanden<br>
 
-Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
-https://dbdiagram.io/d/687e11fef413ba3508dc530a
+<bold>Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
+https://dbdiagram.io/d/687e11fef413ba3508dc530a<bold>
 <br>
 (alternativt i ER-diagram mappen)
 
------ Instruktioner -----
+<bold>---- Instruktioner ----<bold>
+git clone / download zip<br>
+npm install<br>
+nodemon || npm run dev || nodemon server.js<br>
+ny terminal - "/c/Program Files/PostgreSQL/17/bin/pg_ctl.exe" start -D "/c/Program Files/PostgreSQL/17/data"<br>
+(OBS krävs progreSQL17 installerat på datorn)<br>
 
-POST /users - skapar användare <br>
-POST /channels - skapar kanal <br>
-POST /subscriptions - prenumererar på en kanal <br>
-POST /messages - skickar ett medd till en kanal <br>
-GET – hämta resurser <br>
-GET /channels/:id/messages <br>
-GET /users/:id/channels <br>
-DELETE – ta bort resurser <br>
-DELETE /channels/:id <br>
-DELETE /subscriptions/:userId/:channelId <br>
+
+<bold>---- rutter ----<bold>
+POST /users - Skapar en ny användare<br>
+POST /channels - Skapar en ny kanal som en användare äger<br>
+POST /subscriptions - Prenumererar en användare på en viss kanal<br>
+POST /messages - Skickar ett meddelande till en kanal, om användaren är prenumerant<br>
+GET /users - Hämtar alla användare<br>
+GET /channels - Hämtar alla kanaler<br>
+GET /messages - Hämtar alla meddelanden (oavsett kanal)<br>
+GET /resources/overview - Hämtar alla kanaler inkl. deras meddelanden och prenumeranter (översikt)<br>
+GET /channels/:id/messages - Hämtar alla meddelanden i en viss kanal<br>
+GET /users/:id/channels - Hämtar alla kanaler som en användare är prenumerant på<br>
+DELETE /channels/:id - Tar bort en kanal med angivet ID<br>
+DELETE /subscriptions/:userId/:channelId - Tar bort en prenumeration (unsubscribe användare från kanal)<br>
+DELETE /messages/:id - Tar bort ett enskilt meddelande<br>
 PUT eller PATCH – uppdatera resurser <br>
-PATCH /messages/:id för att redigera ett meddelande <br>
-PATCH /channels/:id för att ändra kanalnamn <br>
-
-🧪 Testa med Postman <br>
-Testa alla endpoints med Postman <br>
-Kontrollera att rätt saker sparas i databasen <br>
-Spara era anrop (som Postman-samling eller skärmdumpar) <br>
-Bifoga som dokumentation i inlämningen <br>
-
-Betygskriterier <br>
-För Godkänt: <br>
-Har ett komplett ER-diagram med alla entiteter och relationer som täcker in kraven ovan. <br>
-API:t fungerar enligt beskrivningen ovan<br>
-Bifoga exempelanrop (använd till exempel: Postman) till alla endpoints (se länk under inlämning)<br>
-Att alla gruppmedlemmar deltar eller meddelar frånvaro till gruppen senast 12 timmar innan möten, detta gäller för alla grupplanerade möte.<br>
-Alla gruppmedlemmar deltar i redovisnings momentet (alla ska prata ungefär lika mycket).
-
-För Guldstjärna:<br>
-Ett meddelande kan tillhöra en eller flera kanaler. <br>
-Det går att sortera meddelanden på datum. <br>
-API, ER-diagram och databasstruktur reflekterar detta <br>
-Postman-dokumentation finns även för detta utökade flöde <br>
+PATCH /messages/:id - Uppdaterar innehållet i ett meddelande<br>
+PATCH /channels/:id - Uppdaterar kanalens namn<br>
