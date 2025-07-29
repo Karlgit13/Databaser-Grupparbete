@@ -1,4 +1,4 @@
-Se ER-diagrammet - Guldstjärneversion på dbdiagram.io: https://dbdiagram.io/d/687e11fef413ba3508dc530a (alternativt i ER-diagram mappen)
+Se ER-diagrammet - Guldstjärneversion på dbdiagram.io: <br> https://dbdiagram.io/d/687e11fef413ba3508dc530a <br> (alternativt i ER-diagram mappen)
 
 ----- Instruktioner -----
 
