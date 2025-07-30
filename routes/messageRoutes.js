@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     // Lägg till channel_id till svaret
     const response = { // Skapar ett svarobjekt som innehåller meddelandet och kanalens ID.
       ...message,  // sätter in meddelandets data
-      channel_id: channel_id // Inkluderar kanalens ID i svaret för
+      channel_id: channel_id // Inkluderar kanalens ID i svaret.
     };
 
     res.status(201).json(response);

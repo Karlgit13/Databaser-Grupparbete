@@ -8,7 +8,7 @@ router.post("/", async (req, res) => { // När en klient skickar en POST-förfr�
     // Används för att skapa en ny användare i databasen.
 
     const { username, content } = req.body; // Hämtar ut username och content från klientens request-body
-// Denna data ska sparas i databasen som en ny användare.
+// Denna här ska sparas i databasen som en ny användare.
 
     try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå
         const result = await pool.query( 

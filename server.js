@@ -24,4 +24,4 @@ app.use("/resources", resources) // hämtar resurser.
 const PORT = process.env.PORT || 5000 
 app.listen(PORT, () => { // Startar servern och lyssnar på den angivna porten som i det här fallet är PORT 5000.
     console.log(`Server is running on port ${PORT}`)
-})
+}) 

@@ -4,10 +4,9 @@ import express from "express";
 const router = express.Router();
 
 
-
+ // Denna route används för att hämta en översikt över alla kanaler, deras prenumeranter och meddelanden.
 // hämta resurser
 router.get("/overview", async (req, res) => {  
-    // Denna route används för att hämta en översikt över alla kanaler, deras prenumeranter och meddelanden.
     // res är response-objektet som används för att skicka svar tillbaka till klienten.
     // req är request-objektet som innehåller information om den inkommande HTTP-förfrågan.
     try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå.
