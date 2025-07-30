@@ -56,7 +56,6 @@ router.get("/:id/channels", async (req, res) => {
 
     `, [userId]);
         res.json(result.rows);
-        console.log(result.rows);
     } catch (error) {
 
         console.error("Error fetching user's channels:", error);
@@ -64,16 +63,6 @@ router.get("/:id/channels", async (req, res) => {
     }
 });
 
-
-// export async function getAllUsers() {
-//     try {
-//         const result = await pool.query("SELECT * FROM users");
-//         return result.rows;
-//     } catch (error) {
-//         console.error("Error fetching users:", error);
-//         throw new Error("Internal Server Error");
-//     }
-// }
 
 
 export default router;
