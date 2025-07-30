@@ -4,9 +4,9 @@ import express from "express";
 const router = express.Router();
 
 
- // Denna route används för att hämta en översikt över alla kanaler, deras prenumeranter och meddelanden.
+// Denna route används för att hämta en översikt över alla kanaler, deras prenumeranter och meddelanden.
 // hämta resurser
-router.get("/overview", async (req, res) => {  
+router.get("/overview", async (req, res) => {
     // res är response-objektet som används för att skicka svar tillbaka till klienten.
     // req är request-objektet som innehåller information om den inkommande HTTP-förfrågan.
     try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå.
@@ -48,18 +48,8 @@ router.get("/overview", async (req, res) => {
 });
 
 
-// Skapar en DELETE-route för att ta bort en hel kanal (och tillhörande resurser) via kanalens ID.
-router.delete("/:id/full", async (req, res) => {
-    // req är request-objektet som innehåller information om den inkommande HTTP-förfrågan.
-    // res är response-objektet som används för att skicka svar tillbaka till klient
-    const channelId = req.params.id; //Hämtar kanalens ID från URL:en.
-
-    try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå.
-        // Ta bort message_channels-kopplingar
-
-
 // DELETE /channels/:id – Ta bort en kanal och dess beroenden
-router.delete("/:id", async (req, res) => {
+router.delete("/:id"), async (req, res) => {
     const channelId = parseInt(req.params.id);
     try {
         // 1. Ta bort message_channels
@@ -83,18 +73,8 @@ router.delete("/:id", async (req, res) => {
     } catch (error) { // Fångar upp eventuella fel under processen.
         console.error("Error deleting channel fully:", error);
         res.status(500).json({ error: "Internal Server Error" }); // 500 är HTTP-statuskoden för "Internal Server Error". Står för att något gick fel på servern.
-
-        if (result.rowCount === 0) {
-            return res.status(404).json({ error: "Kanal hittades inte" });
-        }
-
-        res.json({ message: "Kanal borttagen", channel: result.rows[0] });
-    } catch (error) {
-        console.error("Error deleting channel:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-
     }
-});
+}
 
 
 export default router;
