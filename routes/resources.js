@@ -47,6 +47,7 @@ router.get("/overview", async (req, res) => {
     }
 });
 
+
 // Skapar en DELETE-route för att ta bort en hel kanal (och tillhörande resurser) via kanalens ID.
 router.delete("/:id/full", async (req, res) => {
     // req är request-objektet som innehåller information om den inkommande HTTP-förfrågan.
@@ -55,13 +56,22 @@ router.delete("/:id/full", async (req, res) => {
 
     try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå.
         // Ta bort message_channels-kopplingar
+
+
+// DELETE /channels/:id – Ta bort en kanal och dess beroenden
+router.delete("/:id", async (req, res) => {
+    const channelId = parseInt(req.params.id);
+    try {
+        // 1. Ta bort message_channels
+
         await pool.query("DELETE FROM message_channels WHERE channel_id = $1", [channelId]);
 
-        // Ta bort subscriptions
+        // 2. Ta bort subscriptions
         await pool.query("DELETE FROM subscriptions WHERE channel_id = $1", [channelId]);
 
-        // Till sist: ta bort själva kanalen
+        // 3. Ta bort kanalen
         const result = await pool.query("DELETE FROM channels WHERE id = $1 RETURNING *", [channelId]);
+
 
         if (result.rowCount === 0) { // Om ingen rad togs bort, betyder det att kanalen inte finns.
             // Returnera 404 Not Found om kanalen inte hittades. 
@@ -73,9 +83,18 @@ router.delete("/:id/full", async (req, res) => {
     } catch (error) { // Fångar upp eventuella fel under processen.
         console.error("Error deleting channel fully:", error);
         res.status(500).json({ error: "Internal Server Error" }); // 500 är HTTP-statuskoden för "Internal Server Error". Står för att något gick fel på servern.
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: "Kanal hittades inte" });
+        }
+
+        res.json({ message: "Kanal borttagen", channel: result.rows[0] });
+    } catch (error) {
+        console.error("Error deleting channel:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+
     }
 });
-
 
 
 export default router;

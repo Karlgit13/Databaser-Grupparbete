@@ -13,11 +13,20 @@ app.use(express.json()) // En middleware-funktion. Gör så att Express automati
 
 
 //routes
+
 app.use("/users", userRoutes) // hämtar användare.
 app.use("/channels", channelRoutes) // hämtar kanaler.
 app.use("/messages", messageRoutes) // hämtar meddelanden.
 app.use("/subscriptions", subscriptionRoutes) // hämtar prenumerationer.
 app.use("/resources", resources) // hämtar resurser.
+
+app.use("/users", userRoutes)
+app.use("/channels", channelRoutes)
+app.use("/", messageRoutes)
+app.use("/messages", messageRoutes)
+app.use("/subscriptions", subscriptionRoutes)
+app.use("/resources", resources)
+
 
 
 // server

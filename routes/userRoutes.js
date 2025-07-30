@@ -49,9 +49,16 @@ router.get("/:id/channels", async (req, res) => {
       FROM channels
       JOIN subscriptions ON channels.id = subscriptions.channel_id
       WHERE subscriptions.user_id = $1
+
     `, [userId]); // Retunerar: En lista med kanaler som användaren är prenumererad på.
         res.json(result.rows); //result.rows är en array med alla kanaler som användaren är prenumererad på.
     } catch (error) { // Om något går fel, fångas det här felet upp.
+
+    `, [userId]);
+        res.json(result.rows);
+        console.log(result.rows);
+    } catch (error) {
+
         console.error("Error fetching user's channels:", error);
         res.status(500).json({ error: "Internal Server Error" }); // 500 är HTTP-statuskoden för "Internal Server Error". Står för att något gick fel på servern.
     }
