@@ -1,4 +1,5 @@
 # Grupp-Examination-SQL-bulletin<br>
+
 Målet med detta projekt är att bygga ett API och en databas och i detta fall är det prostgreSQL som är databasen.<br>
 Vi har även inkluderat pgAdmin för att kunna kontrollera att alla endpoints är korrekta och att det lagras i databasen<br>
 Och som API använder vi då oss av Node.js/Express API.<br>
@@ -15,12 +16,13 @@ har exakt en ägare<br>
 kan innehålla noll eller flera meddelanden<br>
 
 ## Se ER-diagrammet - Guldstjärneversion på dbdiagram.io:
+
 https://dbdiagram.io/d/687e11fef413ba3508dc530a
 <br>
 (alternativt i ER-diagram mappen)<br>
 
-
 ## Förklaringar av rutter.
+
 ---- rutter ----<br>
 POST /users - Skapar en ny användare<br>
 POST /channels - Skapar en ny kanal som en användare äger<br>
@@ -39,11 +41,10 @@ PUT eller PATCH – uppdatera resurser <br>
 PATCH /messages/:id - Uppdaterar innehållet i ett meddelande<br>
 PATCH /channels/:id - Uppdaterar kanalens namn<br>
 
-
-
 ## Instruktioner för att starta
+
 git clone / download zip<br>
 npm install<br>
-nodemon || npm run dev || nodemon server.js<br>
-ny terminal - "/c/Program Files/PostgreSQL/17/bin/pg_ctl.exe" start -D "/c/Program Files/PostgreSQL/17/data"<br>
-(OBS krävs progreSQL17 installerat på datorn)<br>
+npm run dev<br>
+(script lagts till att starta både backed och postgreSQL 17)<br>
+(OBS krävs postgreSQL 17 installerat på datorn.)

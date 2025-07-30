@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "concurrently \"nodemon server.js\" \"cmd /C \\\"\\\"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\pg_ctl.exe\\\" start -D \\\"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\data\\\"\\\"\"",
+    "pg:start": "cmd /C \"\"C:\\Program Files\\PostgreSQL\\17\\bin\\pg_ctl.exe\" start -D \"C:\\Program Files\\PostgreSQL\\17\\data\"\"",
+    "pg:stop": "cmd /C \"\"C:\\Program Files\\PostgreSQL\\17\\bin\\pg_ctl.exe\" stop -D \"C:\\Program Files\\PostgreSQL\\17\\data\"\""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "pg": "^8.10.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.0",
     "nodemon": "^3.1.10"
   }
 }
