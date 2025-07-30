@@ -42,7 +42,6 @@ PATCH /messages/:id - Uppdaterar innehållet i ett meddelande<br>
 PATCH /channels/:id - Uppdaterar kanalens namn<br>
 
 ## Instruktioner för att starta
-
 git clone / download zip<br>
 npm install<br>
 npm run dev<br>
