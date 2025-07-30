@@ -3,7 +3,7 @@
 Magdas presentation av kod: https://vimeo.com/manage/videos/1105926639<br>
 Karls pgAdmin 1: https://vimeo.com/manage/videos/1105926754<br>
 Karls Postman/bulletin: https://vimeo.com/manage/videos/1105926780<br>
-Karls pgAdmin 2: https://vimeo.com/manage/videos/1105927396
+Karls pgAdmin 2: https://vimeo.com/manage/videos/1105941754
 
 # Grupp-Examination-SQL-bulletin<br>
 
