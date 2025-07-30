@@ -1,3 +1,9 @@
+# Länkar till presentationer:<br>
+Magdas presentation av kod: https://vimeo.com/manage/videos/1105926639<br>
+Karls pgAdmin 1: https://vimeo.com/manage/videos/1105926754<br>
+Karls Postman/bulletin: https://vimeo.com/manage/videos/1105926780<br>
+Karls pgAdmin 2: https://vimeo.com/manage/videos/1105926780
+
 # Grupp-Examination-SQL-bulletin<br>
 
 Målet med detta projekt är att bygga ett API och en databas och i detta fall är det prostgreSQL som är databasen.<br>
