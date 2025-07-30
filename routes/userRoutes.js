@@ -8,17 +8,17 @@ router.post("/", async (req, res) => { // När en klient skickar en POST-förfr�
     // Används för att skapa en ny användare i databasen.
 
     const { username, content } = req.body; // Hämtar ut username och content från klientens request-body
-// Denna här ska sparas i databasen som en ny användare.
+    // Denna här ska sparas i databasen som en ny användare.
 
     try { // Börjar en try-catch-sats för att hantera eventuella fel som kan uppstå
-        const result = await pool.query( 
+        const result = await pool.query(
             // SQL-frågan lägger till en ny användare i tabellen "users"
             "INSERT INTO users (username, created_at, content) VALUES ($1, NOW(), $2) RETURNING *;",
             [username, content] // servern sparar användaren i databasen och svarar med datan direkt med tex username mm.
         );
         res.status(201).json(result.rows[0]); // Skickar ett JSON-svar tillbaka till klienten med den nya användaren. 201 betyder att resursen har skapats och att det gick bra.
     } catch (error) { // fångar upp eventuella fel under processen.
-        console.error("Error creating user:", error.message, error.stack); 
+        console.error("Error creating user:", error.message, error.stack);
         res.status(500).json({ error: "Internal Server Error" }); // 500 är HTTP-statuskoden för "Internal Server Error". Står för att något gick fel på servern.
     }
 });
@@ -50,7 +50,7 @@ router.get("/:id/channels", async (req, res) => {
       JOIN subscriptions ON channels.id = subscriptions.channel_id
       WHERE subscriptions.user_id = $1
 
-    `, [userId]); // Retunerar: En lista med kanaler som användaren är prenumererad på.
+     [userId]); // Retunerar: En lista med kanaler som användaren är prenumererad på.
         res.json(result.rows); //result.rows är en array med alla kanaler som användaren är prenumererad på.
     } catch (error) { // Om något går fel, fångas det här felet upp.
 
