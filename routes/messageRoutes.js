@@ -5,16 +5,14 @@ const router = express.Router();
 
 // Hämta alla meddelanden
 router.get("/", async (req, res) => {
-  try {
+  try { // Använder pool.query för att hämta alla meddelanden från databasen.
     const result = await pool.query("SELECT * FROM messages");
     res.json(result.rows);
-  } catch (error) {
+  } catch (error) { // Fångar upp eventuella fel under processen.
     console.error("Error fetching messages:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
 
 
 // Skapa nytt meddelande (endast om användaren är prenumerant på kanalen)
@@ -22,65 +20,65 @@ router.post("/", async (req, res) => {
   const { user_id, channel_id, content } = req.body;
 
   try {
-    // Kontrollera att användaren är prenumerant
+    // Kontrollerar att användaren är prenumerant
     const subCheck = await pool.query(
       `SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2`,
       [user_id, channel_id]
     );
 
-    if (subCheck.rowCount === 0) {
+    if (subCheck.rowCount === 0) { // Om användaren inte är prenumerant, returneras ett felmeddelande.
       return res.status(403).json({ error: "User is not subscribed to the channel" });
     }
 
     // Skapa meddelandet
-    const messageResult = await pool.query(
+    const messageResult = await pool.query( // Skapar ett nytt meddelande i databasen.
       `INSERT INTO messages (user_id, content, created_at)
        VALUES ($1, $2, NOW())
        RETURNING id, user_id, content, created_at`,
-      [user_id, content]
+      [user_id, content] // Använder NOW() för att man ska få meddelandets skapelsedatum automatiskt.
     );
 
-    const message = messageResult.rows[0];
+    const message = messageResult.rows[0]; // Hämtar det skapade meddelandet från resultatet.
 
     // Lägg till koppling till kanal
-    await pool.query(
+    await pool.query( // Skapar en koppling mellan meddelandet och kanalen i message_channels-tabellen.
       `INSERT INTO message_channels (message_id, channel_id)
        VALUES ($1, $2)`,
-      [message.id, channel_id]
+      [message.id, channel_id] // Använder message.id för att man ska kunna referera till det skapade meddelandet.
     );
 
     // Lägg till channel_id till svaret
-    const response = {
-      ...message,
-      channel_id: channel_id
+    const response = { // Skapar ett svarobjekt som innehåller meddelandet och kanalens ID.
+      ...message,  // sätter in meddelandets data
+      channel_id: channel_id // Inkluderar kanalens ID i svaret för
     };
 
     res.status(201).json(response);
-  } catch (error) {
-    console.error("Error creating message:", error);
+  } catch (error) { // Fångar upp eventuella fel under processen.
+    console.error("Error creating message:", error); 
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// get a specific channel's messages
-router.get("/channel/:id", async (req, res) => {
-  const channelId = req.params.id;
+// Hämta alla meddelanden i en specifik kanal.
+router.get("/channel/:id", async (req, res) => { 
+  const channelId = req.params.id; // Hämtar kanalens ID från URL-parametrarna
 
   try {
-    const result = await pool.query(
+    const result = await pool.query(  // Hämtar alla meddelanden som är kopplade till den specifika kanalen.
       `
-      SELECT m.id AS message_id, m.content, m.created_at, m.user_id, u.username
+      SELECT m.id AS message_id, m.content, m.created_at, m.user_id, u.username 
       FROM messages m
       JOIN message_channels mc ON mc.message_id = m.id
       JOIN users u ON u.id = m.user_id
       WHERE mc.channel_id = $1
       ORDER BY m.created_at DESC
       `,
-      [channelId]
+      [channelId] // Använder kanalens ID för att filtrera meddelandena.
     );
 
-    res.json(result.rows);
-  } catch (error) {
+    res.json(result.rows); // Returnerar meddelandena som JSON.
+  } catch (error) { // Fångar upp eventuella fel under processen.
     console.error("Error fetching messages for channel:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -89,18 +87,16 @@ router.get("/channel/:id", async (req, res) => {
 
 
 
-// Get all messages in a specific channel
-// Params: :id = channel ID
-// Returns: array of messages in the channel
+// Hämta meddelanden för en specifik kanal
 router.get("/channel/:id", async (req, res) => {
-  const channelId = req.params.id
+  const channelId = req.params.id ; // Hämtar kanalens ID från URL-parametrarna
   try {
-    const result = await pool.query(
+    const result = await pool.query( 
       "SELECT * FROM messages WHERE channel_id = $1 ORDER BY created_at DESC",
-      [channelId]
+      [channelId] // Hämtar alla meddelanden som är kopplade till den specifika kanalen.
     );
     res.json(result.rows);
-  } catch (error) {
+  } catch (error) { // Fångar upp eventuella fel under processen.
     console.error("Error fetching messages for channel:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -108,51 +104,51 @@ router.get("/channel/:id", async (req, res) => {
 
 
 
-// DELETE a message by ID
-// Params: :id = message ID
+// Tar bort ett meddelande baserat på dess ID
+// Denna rutt tar bort ett meddelande från databasen baserat på dess ID
 router.delete("/:id", async (req, res) => {
-  const messageId = req.params.id;
+  const messageId = req.params.id; // Hämtar meddelandets ID från URL-parametrarna
 
   try {
-    const result = await pool.query(
+    const result = await pool.query(  // Tar bort meddelandet från databasen.
       "DELETE FROM messages WHERE id = $1 RETURNING *",
-      [messageId]
+      [messageId] // Använder RETURNING * för att få tillbaka det raderade meddelandet.
     );
 
-    if (result.rowCount === 0) {
+    if (result.rowCount === 0) { // Om ingen rad raderades, returneras ett felmeddelande.
       return res.status(404).json({ error: "Meddelandet kunde inte hittas" });
     }
 
     res.status(200).json({ message: "Meddelandet har raderats" });
-  } catch (error) {
+  } catch (error) { // Fångar upp eventuella fel under processen.
     console.error("Fel vid radering av meddelande:", error);
     res.status(500).json({ error: "Serverfel vid radering" });
   }
 });
 
 // PATCH /messages/:id – uppdatera ett meddelande
-router.patch("/:id", async (req, res) => {
-  const messageId = parseInt(req.params.id, 10);
-  const { content } = req.body;
+router.patch("/:id", async (req, res) => { // Skapar en PATCH-endpoint på vägen /:id, där :id är meddelandets ID.
+  const messageId = parseInt(req.params.id, 10); 
+  const { content } = req.body; // Hämtar det nya meddelandet från klientens request body.
 
-  if (isNaN(messageId)) {
-    return res.status(400).json({ error: "Ogiltigt ID" });
+  if (isNaN(messageId)) { // Kontrollerar om messageId är ett nummer.
+    return res.status(400).json({ error: "Ogiltigt ID" }); // Om det inte är ett nummer, returneras ett felmeddelande med status 400 (Bad Request).
   }
 
   try {
-    const result = await pool.query(
-      `UPDATE messages SET content = $1 WHERE id = $2 RETURNING *`,
-      [content, messageId]
+    const result = await pool.query( // Uppdaterar meddelandets innehåll i databasen.
+      `UPDATE messages SET content = $1 WHERE id = $2 RETURNING *`, // Använder RETURNING * för att få tillbaka det uppdaterade meddelandet.
+      [content, messageId] // Använder messageId för att referera till det meddelande som ska uppdateras.
     );
 
-    if (result.rowCount === 0) {
+    if (result.rowCount === 0) { // Om ingen rad uppdaterades, returneras ett felmeddelande.
       return res.status(404).json({ error: "Meddelandet kunde inte hittas" });
     }
 
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error("Error updating message:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.json(result.rows[0]); // Returnerar det uppdaterade meddelandet som JSON.
+  } catch (error) { // Fångar upp eventuella fel under processen.
+    console.error("Error updating message:", error); // Loggar felet i konsolen.
+    res.status(500).json({ error: "Internal Server Error" }); // Returnerar ett felmeddelande med status 500 (Internal Server Error).
   }
 });
 
