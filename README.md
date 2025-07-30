@@ -1,8 +1,9 @@
 # Länkar till presentationer:<br>
+
 Magdas presentation av kod: https://vimeo.com/manage/videos/1105926639<br>
 Karls pgAdmin 1: https://vimeo.com/manage/videos/1105926754<br>
 Karls Postman/bulletin: https://vimeo.com/manage/videos/1105926780<br>
-Karls pgAdmin 2: https://vimeo.com/manage/videos/1105926780
+Karls pgAdmin 2: https://vimeo.com/manage/videos/1105927396
 
 # Grupp-Examination-SQL-bulletin<br>
 
@@ -48,6 +49,7 @@ PATCH /messages/:id - Uppdaterar innehållet i ett meddelande<br>
 PATCH /channels/:id - Uppdaterar kanalens namn<br>
 
 ## Instruktioner för att starta
+
 git clone / download zip<br>
 npm install<br>
 npm run dev<br>
